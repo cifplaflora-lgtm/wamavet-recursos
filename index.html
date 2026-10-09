@@ -1,129 +1,379 @@
+
 <!doctype html>
 <html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Recursos Didácticos WAMAVET</title>
+
 <style>
 :root {
-  --bg:#f4f7f7; --panel:#fff; --ink:#243238; --muted:#6d7b80;
-  --accent:#148a82; --line:#dbe4e6; --hover:#edf7f6;
+  --bg:#f4f7f7;
+  --panel:#ffffff;
+  --ink:#243238;
+  --muted:#6d7b80;
+  --accent:#148a82;
+  --line:#dbe4e6;
 }
-*{box-sizing:border-box}
-html,body{margin:0;height:100%;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
-.app{height:100vh;display:grid;grid-template-columns:310px 1fr}
-aside{background:var(--panel);border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0}
-.brand{padding:20px;border-bottom:1px solid var(--line)}
-.brand h1{font-size:18px;margin:0 0 6px}
-.brand p{font-size:12px;color:var(--muted);margin:0;line-height:1.4}
-.menu{padding:12px;overflow:auto}
-.doc-card{width:100%;display:flex;align-items:center;gap:11px;border:1px solid transparent;background:transparent;border-radius:10px;padding:11px;cursor:pointer;text-align:left;margin-bottom:6px}
-.doc-card:hover{background:var(--hover)}
-.doc-card.active{background:#e5f3f1;border-color:#b8dbd7}
-.doc-icon{width:40px;height:40px;flex:0 0 40px;border-radius:8px;display:grid;place-items:center;background:#e9eeee;color:#0d6d66;font-size:11px;font-weight:700}
-.doc-text{min-width:0}
-.doc-text strong{display:block;font-size:13px;line-height:1.25}
-.doc-text small{display:block;font-size:11px;color:var(--muted);margin-top:4px}
-main{display:flex;flex-direction:column;min-width:0;min-height:0}
-.toolbar{height:58px;flex:0 0 58px;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px}
-#docTitle{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.actions{display:flex;gap:8px}
-.action{border:1px solid var(--line);background:#fff;color:var(--ink);padding:8px 11px;border-radius:8px;font-size:12px;text-decoration:none;cursor:pointer}
-.action:hover{border-color:#aacbc7}
-.viewer-wrap{flex:1;min-height:0;padding:12px}
-#welcome{height:100%;display:grid;place-items:center;background:#fff;border:1px solid var(--line);border-radius:10px;text-align:center;padding:30px}
-#welcome h2{margin:0 0 8px;font-size:22px}
-#welcome p{margin:0;color:var(--muted);max-width:560px;line-height:1.5}
-#viewer{width:100%;height:100%;border:1px solid var(--line);border-radius:10px;background:#fff;display:none}
-@media(max-width:760px){
- .app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
- aside{border-right:0;border-bottom:1px solid var(--line);max-height:240px}
- .brand{padding:12px 14px}
- .menu{display:flex;overflow:auto;gap:8px;padding:8px}
- .doc-card{min-width:230px;margin:0}
- .toolbar{height:auto;min-height:54px}
+
+* { box-sizing:border-box; }
+
+html,body {
+  margin:0;
+  width:100%;
+  height:100%;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+}
+
+.app {
+  height:100vh;
+  height:100dvh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+.toolbar {
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:8px 12px;
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
+}
+
+.brand {
+  font-size:13px;
+  font-weight:bold;
+  white-space:nowrap;
+  color:var(--accent);
+}
+
+#selector {
+  flex:1;
+  min-width:0;
+  height:36px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  padding:0 9px;
+  background:#fff;
+  color:var(--ink);
+  font-size:13px;
+  cursor:pointer;
+}
+
+#selector:focus {
+  outline:2px solid var(--accent);
+  outline-offset:1px;
+}
+
+.action {
+  flex-shrink:0;
+  height:36px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:0 11px;
+  border:1px solid var(--line);
+  border-radius:7px;
+  background:#fff;
+  color:var(--ink);
+  text-decoration:none;
+  font-size:12px;
+  cursor:pointer;
+}
+
+.action:hover { background:#edf7f6; }
+
+.viewer-wrap {
+  flex:1;
+  min-height:0;
+  padding:5px;
+  position:relative;
+}
+
+#welcome {
+  height:100%;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:7px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  padding:25px;
+  text-align:center;
+}
+
+#welcome h2 {
+  font-size:20px;
+  margin:0 0 10px;
+}
+
+#welcome p {
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.5;
+  max-width:550px;
+}
+
+#viewer {
+  width:100%;
+  height:100%;
+  border:0;
+  border-radius:7px;
+  background:white;
+  display:none;
+}
+
+#status {
+  position:absolute;
+  bottom:12px;
+  left:12px;
+  right:12px;
+  padding:10px;
+  background:#fff5e7;
+  border:1px solid #ebcc90;
+  border-radius:6px;
+  color:#67470c;
+  font-size:12px;
+  display:none;
+}
+
+@media(max-width:650px) {
+  .toolbar { gap:5px; padding:6px; }
+  .brand { display:none; }
+  .action { padding:0 7px; }
+  #selector { font-size:12px; }
+  .viewer-wrap { padding:2px; }
 }
 </style>
 </head>
+
 <body>
 <div class="app">
-  <aside>
-    <div class="brand">
-      <h1>Recursos Didácticos WAMAVET</h1>
-      <p>Selecciona un documento para verlo dentro del visor.</p>
+
+  <div class="toolbar">
+    <span class="brand">WAMAVET</span>
+
+    <select id="selector" aria-label="Seleccionar documento">
+      <option value="">Cargando documentos...</option>
+    </select>
+
+    <button class="action" id="refreshBtn"
+            title="Actualizar listado">↻</button>
+
+    <button class="action" id="homeBtn"
+            title="Inicio">Inicio</button>
+
+    <a class="action" id="openBtn"
+       href="#" target="_blank" rel="noopener noreferrer"
+       style="display:none">↗</a>
+  </div>
+
+  <div class="viewer-wrap">
+
+    <div id="welcome">
+      <h2>Manuales de prácticas WAMAVET</h2>
+      <p>
+        Selecciona un manual en el desplegable superior.
+        El documento aparecerá aquí sin salir de WAMAVET.
+      </p>
     </div>
-    <div class="menu">
-      <button class="doc-card" data-src="https://docs.google.com/spreadsheets/d/1MdF6MIYcXnWUPkNbEkPz-o1xnVr2V0T3d8DErqkXiMk/preview" data-title="Enlaces a cuadernos de prácticas" data-open="https://docs.google.com/spreadsheets/d/1MdF6MIYcXnWUPkNbEkPz-o1xnVr2V0T3d8DErqkXiMk/edit">
-      <span class="doc-icon">▦</span>
-      <span class="doc-text"><strong>Enlaces a cuadernos de prácticas</strong><small>Hoja de cálculo</small></span>
-    </button>
-<button class="doc-card" data-src="https://drive.google.com/file/d/1fIVq8WhUFUX-Up-hyw3W5xVOuyjYl61j/preview" data-title="Cuaderno de Prácticas GSDC (PPCC-PECU)" data-open="https://drive.google.com/file/d/1fIVq8WhUFUX-Up-hyw3W5xVOuyjYl61j/view">
-      <span class="doc-icon">PDF</span>
-      <span class="doc-text"><strong>Cuaderno de Prácticas GSDC (PPCC-PECU)</strong><small>PDF</small></span>
-    </button>
-<button class="doc-card" data-src="https://drive.google.com/file/d/1Bfrdv3fIGzrOzwxr4NJr_sw1AWe2Q5ki/preview" data-title="Cuaderno de Prácticas GMSR (OBBC) 2" data-open="https://drive.google.com/file/d/1Bfrdv3fIGzrOzwxr4NJr_sw1AWe2Q5ki/view">
-      <span class="doc-icon">PDF</span>
-      <span class="doc-text"><strong>Cuaderno de Prácticas GMSR (OBBC) 2</strong><small>PDF</small></span>
-    </button>
-<button class="doc-card" data-src="https://drive.google.com/file/d/1c4A4Ou8V7KdzhtqbfgfE16JDdwMxsq3J/preview" data-title="Cuaderno de Prácticas GMPRC (MPP)" data-open="https://drive.google.com/file/d/1c4A4Ou8V7KdzhtqbfgfE16JDdwMxsq3J/view">
-      <span class="doc-icon">PDF</span>
-      <span class="doc-text"><strong>Cuaderno de Prácticas GMPRC (MPP)</strong><small>PDF</small></span>
-    </button>
-<button class="doc-card" data-src="https://drive.google.com/file/d/1RdHLhGBcMqiteDy4xEAiJjlI412EZQE5/preview" data-title="Cuaderno de Prácticas GMCYG (PR)" data-open="https://drive.google.com/file/d/1RdHLhGBcMqiteDy4xEAiJjlI412EZQE5/view">
-      <span class="doc-icon">PDF</span>
-      <span class="doc-text"><strong>Cuaderno de Prácticas GMCYG (PR)</strong><small>PDF</small></span>
-    </button>
-    </div>
-  </aside>
-  <main>
-    <div class="toolbar">
-      <div id="docTitle">Selecciona un documento</div>
-      <div class="actions">
-        <button class="action" id="homeBtn">Inicio</button>
-        <a class="action" id="openBtn" href="#" target="_blank" rel="noopener" style="display:none">Abrir aparte</a>
-      </div>
-    </div>
-    <div class="viewer-wrap">
-      <div id="welcome">
-        <div>
-          <h2>Documentación WAMAVET</h2>
-          <p>Los documentos se cargarán aquí mismo, sin sustituir la página de WAMAVET. Usa el menú lateral para navegar entre los cuadernos y recursos.</p>
-        </div>
-      </div>
-      <iframe id="viewer" title="Visor de documentos" allow="fullscreen"></iframe>
-    </div>
-  </main>
+
+    <iframe id="viewer"
+            title="Visor de documentos"
+            allowfullscreen></iframe>
+
+    <div id="status" role="alert"></div>
+  </div>
+
 </div>
 
 <script>
-const cards = [...document.querySelectorAll('.doc-card')];
+// PEGA AQUÍ LA URL DE TU APLICACIÓN GOOGLE APPS SCRIPT
+const URL_SCRIPT = 'https://script.google.com/macros/s/AKfycbyOr1r9whvwLGal6zrZo7gTfLuoJAux0cxl9qmkDk8Zp1RWUFoE7P_AGhoo_Nar8P4D/exec';
+
+// Hoja de cálculo ya utilizada anteriormente.
+const HOJA = {
+  nombre: 'Enlaces a cuadernos de prácticas',
+  src: 'https://docs.google.com/spreadsheets/d/1MdF6MIYcXnWUPkNbEkPz-o1xnVr2V0T3d8DErqkXiMk/preview',
+  open: 'https://docs.google.com/spreadsheets/d/1MdF6MIYcXnWUPkNbEkPz-o1xnVr2V0T3d8DErqkXiMk/edit'
+};
+
+const selector = document.getElementById('selector');
 const viewer = document.getElementById('viewer');
 const welcome = document.getElementById('welcome');
-const title = document.getElementById('docTitle');
 const openBtn = document.getElementById('openBtn');
-const homeBtn = document.getElementById('homeBtn');
+const status = document.getElementById('status');
+const refreshBtn = document.getElementById('refreshBtn');
 
-function openDoc(card) {
-  cards.forEach(c => c.classList.remove('active'));
-  card.classList.add('active');
-  title.textContent = card.dataset.title;
-  viewer.src = card.dataset.src;
-  viewer.style.display = 'block';
-  welcome.style.display = 'none';
-  openBtn.href = card.dataset.open;
-  openBtn.style.display = 'inline-block';
+let documentos = [];
+let peticion = 0;
+
+function mostrarError(mensaje) {
+  status.textContent = mensaje;
+  status.style.display = 'block';
 }
 
-cards.forEach(card => card.addEventListener('click', () => openDoc(card)));
+function ocultarError() {
+  status.style.display = 'none';
+}
 
-homeBtn.addEventListener('click', () => {
-  cards.forEach(c => c.classList.remove('active'));
+function agregarOpcion(valor, texto) {
+  const opcion = document.createElement('option');
+  opcion.value = valor;
+  opcion.textContent = texto;
+  selector.appendChild(opcion);
+}
+
+function abrirDocumento(src, url) {
+  viewer.src = src;
+  viewer.style.display = 'block';
+  welcome.style.display = 'none';
+  openBtn.href = url;
+  openBtn.style.display = 'inline-flex';
+  ocultarError();
+}
+
+function inicio() {
+  selector.value = '';
   viewer.src = 'about:blank';
   viewer.style.display = 'none';
-  welcome.style.display = 'grid';
-  title.textContent = 'Selecciona un documento';
+  welcome.style.display = 'flex';
   openBtn.style.display = 'none';
+  ocultarError();
+}
+
+selector.addEventListener('change', function () {
+  const valor = selector.value;
+
+  if (!valor) {
+    inicio();
+    return;
+  }
+
+  if (valor === 'hoja') {
+    abrirDocumento(HOJA.src, HOJA.open);
+    return;
+  }
+
+  const indice = Number(valor);
+
+  if (!Number.isInteger(indice) ||
+      indice < 0 ||
+      indice >= documentos.length) return;
+
+  const documento = documentos[indice];
+  const id = encodeURIComponent(documento.id);
+
+  abrirDocumento(
+    'https://drive.google.com/file/d/' + id + '/preview',
+    'https://drive.google.com/file/d/' + id + '/view'
+  );
 });
+
+document.getElementById('homeBtn')
+  .addEventListener('click', inicio);
+
+refreshBtn.addEventListener('click', cargarDocumentos);
+
+function reconstruirSelector(anteriores, seleccionado) {
+  documentos = anteriores;
+  selector.replaceChildren();
+
+  agregarOpcion('', 'Seleccionar manual de prácticas...');
+  agregarOpcion('hoja', '▦ Enlaces a cuadernos de prácticas');
+
+  documentos.forEach(function(doc, indice) {
+    agregarOpcion(String(indice), 'PDF · ' + doc.nombre);
+  });
+
+  if (seleccionado === 'hoja') {
+    selector.value = 'hoja';
+  } else if (seleccionado) {
+    const indice = documentos.findIndex(d => d.id === seleccionado);
+    if (indice !== -1) {
+      selector.value = String(indice);
+    } else {
+      inicio();
+    }
+  }
+}
+
+function cargarDocumentos() {
+  if (URL_SCRIPT === 'PEGAR_AQUI_URL_SCRIPT') {
+    mostrarError('Falta configurar la URL de Google Apps Script.');
+    reconstruirSelector([], '');
+    return;
+  }
+
+  const anterior = selector.value === 'hoja'
+    ? 'hoja'
+    : documentos[Number(selector.value)]?.id || '';
+
+  const numero = ++peticion;
+  const callback = 'wamavetCallback' + numero;
+  const script = document.createElement('script');
+
+  refreshBtn.disabled = true;
+  ocultarError();
+
+  let terminado = false;
+
+  const temporizador = setTimeout(function() {
+    finalizar();
+    mostrarError('No se pudo cargar el listado. Revisa la conexión y los permisos.');
+  }, 20000);
+
+  function finalizar() {
+    if (terminado) return false;
+    terminado = true;
+    clearTimeout(temporizador);
+    refreshBtn.disabled = false;
+    script.remove();
+    delete window[callback];
+    return true;
+  }
+
+  window[callback] = function(respuesta) {
+    if (!finalizar()) return;
+
+    if (!respuesta || !respuesta.ok ||
+        !Array.isArray(respuesta.documentos)) {
+      mostrarError('Google Drive no ha podido devolver los documentos.');
+      return;
+    }
+
+    const lista = respuesta.documentos.filter(function(doc) {
+      return doc &&
+        typeof doc.id === 'string' &&
+        typeof doc.nombre === 'string';
+    });
+
+    reconstruirSelector(lista, anterior);
+  };
+
+  script.onerror = function() {
+    if (finalizar()) {
+      mostrarError('Error de conexión con Google Apps Script.');
+    }
+  };
+
+  const separador = URL_SCRIPT.includes('?') ? '&' : '?';
+
+  script.src = URL_SCRIPT + separador +
+    'callback=' + encodeURIComponent(callback) +
+    '&t=' + Date.now();
+
+  document.head.appendChild(script);
+}
+
+reconstruirSelector([], '');
+cargarDocumentos();
 </script>
 </body>
 </html>
